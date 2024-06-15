@@ -51,8 +51,7 @@ function extractIPv4(ip) {
 
 async function SendToLine(message){
  
-  // var token = 'MeHN6VNE4a3m4CnB2IPJAvly7hNvlMdCCVi9pyzDaGh';
-  var token = 'xc9Od32gX4RgWZxtuWncJ4ucyrkFyk7Xylif0TmygGA'; // สำหรับทดสอบ
+  var token = 'MeHN6VNE4a3m4CnB2IPJAvly7hNvlMdCCVi9pyzDaGh';
 
   const paras = {
     method: 'POST',
