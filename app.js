@@ -16,6 +16,7 @@ app.get("/", async (req, res) => {
     const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
 
     const message = `
+      ชื่อนักศึกษา: สนายุ จินตนาวรรณกุล
       รหัสนักศึกษา: ${ID}
       วันเวลาที่เปิดหน้าเว็บ: ${currentDateTime}
       URL: ${fullUrl}
