@@ -28,6 +28,7 @@ app.get("/", async (req, res) => {
 
 
     res.send(`
+      <p>ชื่อนักศึกษา: สนายุ จินตนาวรรณกุล<p>
       <p>รหัสนักศึกษา: ${ID}</p>
       <p>วันเวลาที่เปิดหน้าเว็บ: ${currentDateTime}</p>
       <p>URL: ${fullUrl}</p>
