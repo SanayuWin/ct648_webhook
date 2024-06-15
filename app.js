@@ -6,17 +6,20 @@ const app = express();
 app.get("/", async (req, res) => {
   const ip = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
   try {
-    const response = await fetch(`https://api.iplocation.net/?ip=${ip}`);
+    const ipv4Address = extractIPv4(ip);
+    const response = await fetch(`https://api.iplocation.net/?ip=${ipv4Address}`);
     const locationData = await response.json();
     const ID = '65130406'
     const currentDateTime = new Date().toLocaleString();
     const country = locationData.country_name;
     const isp = locationData.isp;
-    
+    const fullUrl = req.protocol + '://' + req.get('host') + req.originalUrl;
+
     const message = `
       รหัสนักศึกษา: ${ID}
       วันเวลาที่เปิดหน้าเว็บ: ${currentDateTime}
-      IP Address: ${ip}
+      URL: ${fullUrl}
+      IP Address: ${ipv4Address}
       ประเทศ: ${country}
       หน่วยงาน: ${isp}
     `;
@@ -26,7 +29,8 @@ app.get("/", async (req, res) => {
     res.send(`
       <p>รหัสนักศึกษา: ${ID}</p>
       <p>วันเวลาที่เปิดหน้าเว็บ: ${currentDateTime}</p>
-      <p>IP Address: ${ip}</p>
+      <p>URL: ${fullUrl}</p>
+      <p>IP Address: ${ipv4Address}</p>
       <p>ประเทศ: ${country}</p>
       <p>หน่วยงาน: ${isp}</p>
     `);
@@ -36,6 +40,14 @@ app.get("/", async (req, res) => {
   }
 });
 
+function extractIPv4(ip) {
+  const match = ip.match(/^::ffff:(\d+\.\d+\.\d+\.\d+)$/);
+  if (match && match.length === 2) {
+    return match[1]; // Return the IPv4 address part
+  } else {
+    return ip; // Return the original IP if not in ::ffff: format
+  }
+}
 
 async function SendToLine(message){
  
